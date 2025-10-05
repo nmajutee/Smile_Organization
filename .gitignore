@@ -1,0 +1,103 @@
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+ngo/
+venv/
+ENV/
+env/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+/static_root
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node/NPM (not used - using CDN for Tailwind/Alpine.js)
+node_modules/
+package-lock.json
+package.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Backup files
+*.bak
+*.backup
+
+# Private project tracking and internal docs
+.project_progress.md
+PROJECT_SUMMARY.md
+*_PRIVATE.md
+*_INTERNAL.md
+NOTES.md
+TODO_PRIVATE.md
+
+# Deployment secrets (use environment variables instead)
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+credentials/
+
+# Local database dumps
+*.sql
+*.dump
+*.sqlite3-backup
+
+# Payment gateway test files
+test_payments/
+sandbox_keys/
+
+# Personal notes and drafts
+drafts/
+personal_notes/
+.notes/
+SECURITY_ANALYSIS.md

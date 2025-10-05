@@ -1,0 +1,50 @@
+# Core Django
+Django>=5.0
+djangorestframework
+django-cors-headers
+django-environ
+
+# Database
+psycopg2-binary
+
+# Production Server
+gunicorn
+whitenoise
+
+# Frontend Enhancement
+django-htmx
+
+# Payment Gateways
+rave-python
+paypalrestsdk
+requests
+
+# PDF Generation (for donation receipts)
+reportlab
+Pillow
+
+# Email & Notifications
+django-anymail
+
+# Security & Authentication
+django-allauth
+
+# SEO & Schema
+django-meta
+
+# Development Tools
+django-extensions
+django-debug-toolbar
+
+# Utilities
+python-decouple
+dj-database-url
+celery
+redis
+
+# Testing
+pytest
+pytest-django
+
+# Icons
+django-heroicons
