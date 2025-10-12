@@ -1,0 +1,59 @@
+# ============================================
+# Smile Organization - Requirements
+# Python 3.8+ compatible
+# Django 4.2 LTS (Supported until April 2026)
+# ============================================
+
+# Core Django (LTS Version)
+Django==4.2.16  # Latest 4.2 LTS with security patches
+djangorestframework==3.15.2
+django-cors-headers==4.4.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# Environment Configuration
+django-environ==0.11.2
+
+# Production Server
+gunicorn==21.2.0
+whitenoise==6.7.0
+
+# Authentication & Security
+djangorestframework-simplejwt==5.3.1
+django-ratelimit==4.1.0  # API rate limiting
+
+# Payment Integrations
+rave-python==1.4.2  # Flutterwave SDK (more maintained)
+paypalrestsdk==1.13.3
+requests==2.31.0
+
+# PDF Generation (for receipts)
+reportlab==4.2.5
+python-dateutil==2.9.0
+
+# Frontend Tools
+django-htmx==1.19.0
+
+# Tailwind CSS
+django-tailwind==3.6.0
+
+# Email & Notifications
+django-anymail==10.3  # Multiple email providers support
+
+# Image Processing
+Pillow==10.4.0
+
+# Utilities
+python-decouple==3.8
+django-filter==24.3  # Advanced filtering for APIs
+django-crispy-forms==2.3  # Better form rendering
+
+# SEO & Optimization
+django-robots==6.1  # robots.txt management
+# django-sitemap - Built into Django, no need for separate package
+
+# Development Tools (optional - comment out for production)
+django-extensions==3.2.3
+django-debug-toolbar==4.4.6
+faker==30.8.2  # Generate test data
