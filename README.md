@@ -4,7 +4,7 @@ my capstone project for ALX. trying to build an ngo platform where people can vo
 
 ## what it does (hopefully)
 - user registration and login
-- browse projects  
+- browse projects
 - volunteer for projects
 - donate money (flutterwave/paypal)
 - blog posts

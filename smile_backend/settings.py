@@ -1,27 +1,20 @@
-# django settings file - copied from startproject command
-# trying to figure out what all these settings do
-
 from pathlib import Path
 import os
 
-# trying to use .env file but not sure if its working
 try:
     from decouple import config
 except:
-    # if decouple not installed just use regular os.environ
     config = os.environ.get
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# TODO: change this secret key before deploying!!!
 SECRET_KEY = config('SECRET_KEY', 'django-insecure-please-change-this-123456789')
 
-DEBUG = True  # remember to turn off in production
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']  # TODO: fix this security issue later
+ALLOWED_HOSTS = ['*']  # TODO: restrict this later
 
 
-# apps i need for the project
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,11 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # stuff i installed from pip
+    # third party
     'rest_framework',
-    'corsheaders',  # for vue.js frontend
+    'corsheaders',
     
-    # my apps
+    # local apps
     'apps.accounts',
     'apps.projects',
     'apps.donations',
@@ -44,7 +37,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # put this first i think
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,22 +66,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smile_backend.wsgi.application'
 
-# database - using sqlite for now because postgresql is complicated
+# using sqlite for development
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # just creates a file
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# TODO: switch to postgresql when deploying
 
 # CUSTOM USER MODEL
 
 AUTH_USER_MODEL = 'accounts.User'
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -99,34 +88,32 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# dont know what these do but they were in the default settings
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# static files (css, js, images)
+# static files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# media files (user uploads)
+# media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# tell django to use my custom user model
 AUTH_USER_MODEL = 'accounts.User'
 
-# rest framework settings - copied from docs
+# rest framework
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # TODO: change this!!! very insecure
+        'rest_framework.permissions.AllowAny',  # TODO: fix permissions
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  # show 10 items per page
+    'PAGE_SIZE': 10,
 }
 
-# cors - allow all origins for now (fix later)
-CORS_ALLOW_ALL_ORIGINS = True  # BUG: this is bad for production
+# cors settings
+CORS_ALLOW_ALL_ORIGINS = True  # TODO: restrict origins
 CORS_ALLOW_CREDENTIALS = True

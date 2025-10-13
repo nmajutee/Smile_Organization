@@ -2,7 +2,7 @@
 
 ## stuff that works
 - django installed (4.2.16)
-- all apps created  
+- all apps created
 - custom user model with email login
 - sqlite database
 - rest framework installed
