@@ -7,19 +7,19 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
     """Custom admin for User model"""
 
-    # Fields to display in user list
+    # Fields to display the user profile in the list view
     list_display = ['email', 'first_name', 'last_name', 'role', 'email_verified', 'is_active', 'created_at']
 
     # Filters on the right sidebar
     list_filter = ['role', 'email_verified', 'is_staff', 'is_superuser', 'is_active', 'created_at']
 
-    # Search functionality
+    # Search functionality by email and name
     search_fields = ['email', 'first_name', 'last_name', 'phone']
 
     # Default ordering (newest first)
     ordering = ['-created_at']
 
-    # Fields layout when editing a user
+    # Fields layout when editing a user in the admin panel
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('first_name', 'last_name', 'phone', 'bio', 'avatar')}),
@@ -30,7 +30,7 @@ class UserAdmin(BaseUserAdmin):
         (_('Important dates'), {'fields': ('last_login', 'created_at', 'updated_at')}),
     )
 
-    # Fields layout when adding a new user
+    # Fields layout when adding a new user in the admin panel
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -38,5 +38,5 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
 
-    # Read-only fields (can't be edited)
+    # Read-only fields (can't be edited) because they are auto-managed
     readonly_fields = ['created_at', 'updated_at', 'last_login']
