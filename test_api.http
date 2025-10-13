@@ -3,7 +3,7 @@ POST http://127.0.0.1:8000/api/accounts/register/
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "testuser@example.com",
   "password": "test123",
   "password2": "test123",
   "first_name": "Test",
@@ -11,11 +11,25 @@ Content-Type: application/json
   "role": "volunteer"
 }
 
-### Login User
+### Login User (Get JWT Tokens)
 POST http://127.0.0.1:8000/api/accounts/login/
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "testuser@example.com",
   "password": "test123"
+}
+
+### Get Profile (Protected - Need Token)
+GET http://127.0.0.1:8000/api/accounts/profile/
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### Update Profile (Protected - Need Token)
+PUT http://127.0.0.1:8000/api/accounts/profile/update/
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+{
+  "first_name": "Updated",
+  "bio": "This is my bio"
 }

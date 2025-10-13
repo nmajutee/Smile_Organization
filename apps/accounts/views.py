@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate, get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import (
     UserRegistrationSerializer,
     UserLoginSerializer,
@@ -30,7 +31,7 @@ def register(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    """Login user"""
+    """Login user and return JWT tokens"""
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']
@@ -39,10 +40,15 @@ def login(request):
         user = authenticate(email=email, password=password)
 
         if user:
-            # TODO: JWT token generation can be added here
+            refresh = RefreshToken.for_user(user)
+
             return Response({
                 'message': 'Login successful',
-                'user': UserSerializer(user).data
+                'user': UserSerializer(user).data,
+                'tokens': {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }
             })
         return Response({
             'error': 'Invalid credentials'
@@ -77,13 +83,11 @@ def change_password(request):
     if serializer.is_valid():
         user = request.user
 
-        # check old password
         if not user.check_password(serializer.validated_data['old_password']):
             return Response({
                 'error': 'Old password is incorrect'
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        # set new password
         user.set_password(serializer.validated_data['new_password'])
         user.save()
 
