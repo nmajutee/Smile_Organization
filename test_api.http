@@ -33,3 +33,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
   "first_name": "Updated",
   "bio": "This is my bio"
 }
+
+### Create Project (Need Admin Token)
+POST http://127.0.0.1:8000/api/projects/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYwMzcxODAwLCJpYXQiOjE3NjAzNTM4MDAsImp0aSI6ImQxNzFiNDlmM2E0YTRjZjE4ZWEwZDk2MzBiODViODE4IiwidXNlcl9pZCI6Mn0.CGCLaymRXFjN0zFg65tT6F092SjEVxzSj2bx8bGqNJg
+
+{
+  "title": "Clean Water Initiative",
+  "description": "Providing clean water to rural communities",
+  "location": "Douala, Cameroon",
+  "start_date": "2025-11-01",
+  "end_date": "2025-12-31",
+  "status": "upcoming",
+  "volunteer_needed": 20,
+  "donation_goal": 50000
+}
+
+### Get All Projects
+GET http://127.0.0.1:8000/api/projects/
+
+### Get Single Project
+GET http://127.0.0.1:8000/api/projects/1/
+
+### Apply as Volunteer
+POST http://127.0.0.1:8000/api/projects/apply/
+Content-Type: application/json
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+{
+  "project": 1,
+  "message": "I would love to volunteer for this project"
+}
