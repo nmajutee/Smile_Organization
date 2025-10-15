@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('apps.accounts.urls')),
     path('api/projects/', include('apps.projects.urls')),
+    path('api/donations/', include('apps.donations.urls')),
 ]
 
 # serve media files like images and videos during development
