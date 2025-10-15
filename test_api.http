@@ -65,3 +65,28 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "project": 1,
   "message": "I would love to volunteer for this project"
 }
+
+### Create Donation
+POST http://127.0.0.1:8000/api/donations/create/
+Content-Type: application/json
+
+{
+  "project": 1,
+  "amount": 100.00,
+  "currency": "USD",
+  "payment_method": "flutterwave",
+  "donor_email": "donor@example.com",
+  "donor_name": "John Doe",
+  "message": "Happy to support this cause!",
+  "is_anonymous": false
+}
+
+### Get All Donations
+GET http://127.0.0.1:8000/api/donations/
+
+### Get Single Donation
+GET http://127.0.0.1:8000/api/donations/1/
+
+### Get My Donations (Need Token)
+GET http://127.0.0.1:8000/api/donations/my-donations/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYwNTUxNzc4LCJpYXQiOjE3NjA1MzM3NzgsImp0aSI6IjExMjVmMzA3ZTZjODRiYmQ4MjgyMzI5YjExMDNjY2RjIiwidXNlcl9pZCI6Mn0.4S4DyVjGQBKFNQ--A2Yk_Ab2Uj7bWTR5q_6qdwccF5I
