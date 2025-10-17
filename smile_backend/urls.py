@@ -8,8 +8,11 @@ urlpatterns = [
     path('api/accounts/', include('apps.accounts.urls')),
     path('api/projects/', include('apps.projects.urls')),
     path('api/donations/', include('apps.donations.urls')),
+    path('api/blog/', include('apps.blog.urls')),
+    path('api/events/', include('apps.calendar_app.urls')),
+    path('api/core/', include('apps.core.urls')),
 ]
 
-# serve media files like images and videos during development
+# servee media files like images and videos during development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
