@@ -13,6 +13,6 @@ urlpatterns = [
     path('api/core/', include('apps.core.urls')),
 ]
 
-# servee media files like images and videos during development
+# serve media files like images and videos during development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
