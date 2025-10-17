@@ -1,80 +1,64 @@
-# Smile Organization - NGO Backend
+# Smile Organization - NGO Platform
 
-my capstone project for ALX. trying to build an ngo platform where people can volunteer and donate.
+A web platform that connects volunteers and donors with NGO projects.
 
-## what it does (hopefully)
-- user registration and login
-- browse projects
-- volunteer for projects
-- donate money (flutterwave/paypal)
-- blog posts
-- calendar events
+## What It Does
 
-## tech stack
-- django 4.2
-- django rest framework
-- sqlite (for now, will use postgres later)
-- vue.js frontend (separate repo maybe?)
+- **Volunteer**: Browse projects and apply to volunteer
+- **Donate**: Support projects with online payments
+- **Track**: See project progress and upcoming events
+- **Read**: Stay updated with blog posts and news
 
-## setup
+## Built With
+
+- Django 4.2 (Backend API)
+- Vue.js (Frontend - coming soon)
+- SQLite (Development) / PostgreSQL (Production)
+- Flutterwave (Payment processing)
+
+## Quick Start
 
 ```bash
-# clone repo
-git clone https://github.com/nmajutee/Smile_Organization.git
-cd Smile_Organization
+# Install dependencies
+pip install -r [requirements.txt](http://_vscodecontentref_/0)
 
-# make virtual environment
-python3 -m venv venv
-source venv/bin/activate
+# Setup database
+python [manage.py](http://_vscodecontentref_/1) migrate
 
-# install stuff
-pip install -r requirements.txt
+# Create admin account
+python [manage.py](http://_vscodecontentref_/2) createsuperuser
 
-# run migrations
-python manage.py migrate
+# Run server
+python [manage.py](http://_vscodecontentref_/3) runserver
 
-# create admin user
-python manage.py createsuperuser
+Visit: http://127.0.0.1:8000/admin
 
-# run server
-python manage.py runserver
-```
+## Features
 
-visit http://127.0.0.1:8000/admin
+✅ User registration and login
+✅ Project browsing and volunteering
+✅ Online donations with payment tracking
+✅ Blog for updates and stories
+✅ Event calendar
+✅ Admin dashboard
 
-## apps
-- `accounts` - user auth and profiles
-- `projects` - project management
-- `donations` - payment processing
-- `blog` - news and updates
-- `calendar_app` - events
-- `core` - home page stuff
+## API Endpoints
+- `/api/accounts/register/`    - Sign up
+- `/api/accounts/login/`       - Login (JWT)
+- `/api/projects/`             - List/create projects
+- `/api/donations/create/`     - Make donation
+- `/api/blog/`                 - Blog posts
+- `/api/events/`               - Calendar events
 
-## api endpoints (work in progress)
-- `/api/auth/register/` - register
-- `/api/auth/login/` - login
-- `/api/projects/` - list projects
-- `/api/donations/` - make donation
-- more coming...
+## Project Structure
+apps/
+- `accounts/`      - User authentication
+- `projects/`      - Project management
+- `donations/`     - Payment processing
+- `blog/`          - News and updates
+- `calendar_app/`  - Events
+- `core/`          - About/Contact pages
 
-## todo
-- [ ] finish auth endpoints
-- [ ] test with postman
-- [ ] add permissions
-- [ ] integrate flutterwave
-- [ ] write tests
-- [ ] deploy on render
-- [ ] add frontend
-
-## known issues
-- cors too permissive
-- debug mode on
-- secret key in code
-- no email verification
-- sqlite instead of postgres
-- many security issues to fix
-
-will fix these later when i understand django better
-
-## author
-Terence Nmaju - ALX Backend Capstone 2025
+## Author
+Terence Nmaju
+ALX BE - Capstone Project 2025
