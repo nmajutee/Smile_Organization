@@ -3,8 +3,8 @@ services:
     name: smile-organization
     env: python
     python_version: 3.8.10
-    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
-    startCommand: gunicorn smile_backend.wsgi:application --bind=0.0.0.0:$PORT --workers=4 --threads=4
+    buildCommand: chmod +x build.sh start.sh && ./build.sh
+    startCommand: ./start.sh
     autoDeploy: true
     envVars:
       - key: DJANGO_SETTINGS_MODULE
