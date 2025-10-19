@@ -2,9 +2,16 @@ services:
   - type: web
     name: smile-organization
     env: python
+    plan: free
+    region: ohio
     python_version: 3.8.10
-    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --no-input
-    startCommand: cd /opt/render/project/src && gunicorn smile_backend.wsgi:application --bind 0.0.0.0:$PORT --log-level debug
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      python manage.py migrate
+      python manage.py collectstatic --no-input
+    startCommand: |
+      gunicorn smile_backend.wsgi:application --bind=0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: smile_backend.settings
