@@ -19,6 +19,7 @@ dj-database-url==1.0.0
 # Production Server
 gunicorn==21.2.0
 python-dotenv==1.0.0
+whitenoise==6.7.0
 
 
 # Authentication & Security
