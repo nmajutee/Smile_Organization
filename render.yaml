@@ -2,10 +2,11 @@ services:
   - type: web
     name: smile-organization
     env: python
+    python_version: 3.8.10
     buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --no-input
-    startCommand: gunicorn --bind 0.0.0.0:$PORT smile_backend.wsgi:application
+    startCommand: cd /opt/render/project/src && gunicorn smile_backend.wsgi:application --bind 0.0.0.0:$PORT --log-level debug
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.8.10
       - key: DJANGO_SETTINGS_MODULE
         value: smile_backend.settings
+      - key: WEB_CONCURRENCY
+        value: "4"
