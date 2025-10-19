@@ -3,25 +3,30 @@ services:
     name: smile-organization
     env: python
     python_version: 3.8.10
-    buildCommand: chmod +x build.sh && ./build.sh
-    startCommand: chmod +x start.sh && ./start.sh
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn smile_backend.wsgi:application --bind=0.0.0.0:$PORT --workers=4 --threads=4
+    autoDeploy: true
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: smile_backend.settings
-      - key: DATABASE_URL
-        value: "postgresql://smileorg_bigtee:1UUofPjJlFyA7e2KkOYw0HpgEe37MJQQ@dpg-d3qince3jp1c738levgg-a/smileorg_db"
       - key: ALLOWED_HOSTS
         value: "smile-organization.onrender.com"
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
-        value: "ef*dgd_v8^ta-)-my-$o_-0#y@0c_r#60d*pxpqz^@x54#ng-&"
+        generateValue: true
       - key: WEB_CONCURRENCY
         value: "4"
       - key: DATABASE_URL
         fromDatabase:
           name: smile_db
           property: connectionString
+
+databases:
+  - name: smile_db
+    databaseName: smile_db
+    plan: free
+    ipAllowList: []
 
 databases:
   - name: smile_db
