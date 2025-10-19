@@ -27,8 +27,3 @@ databases:
     databaseName: smile_db
     plan: free
     ipAllowList: []
-
-databases:
-  - name: smile_db
-    databaseName: smile_db
-    plan: free
