@@ -10,3 +10,14 @@ services:
         value: smile_backend.settings
       - key: WEB_CONCURRENCY
         value: "4"
+      - key: DATABASE_URL
+        value: "postgresql://smileorg_bigtee:1UUofPjJlFyA7e2KkOYw0HpgEe37MJQQ@dpg-d3qince3jp1c738levgg-a/smileorg_db"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smile_db
+          property: connectionString
+
+databases:
+  - name: smile_db
+    databaseName: smile_db
+    plan: free
