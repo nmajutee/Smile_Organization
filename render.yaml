@@ -2,21 +2,12 @@ services:
   - type: web
     name: smile-organization
     env: python
-    plan: free
-    region: ohio
-    python_version: 3.8.10
-    buildCommand: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-      python manage.py migrate
-      python manage.py collectstatic --no-input
-    startCommand: |
-      gunicorn smile_backend.wsgi:application --bind=0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.8.10"
       - key: DJANGO_SETTINGS_MODULE
         value: smile_backend.settings
-      - key: WEB_CONCURRENCY
-        value: "4"
       - key: DATABASE_URL
         value: "postgresql://smileorg_bigtee:1UUofPjJlFyA7e2KkOYw0HpgEe37MJQQ@dpg-d3qince3jp1c738levgg-a/smileorg_db"
       - key: ALLOWED_HOSTS
