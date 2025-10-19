@@ -2,25 +2,10 @@ services:
   - type: web
     name: smile-organization
     env: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
-    startCommand: gunicorn smile_backend.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --no-input
+    startCommand: gunicorn --bind 0.0.0.0:$PORT smile_backend.wsgi:application
     envVars:
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DEBUG
-        value: "False"
+      - key: PYTHON_VERSION
+        value: 3.8.10
       - key: DJANGO_SETTINGS_MODULE
         value: smile_backend.settings
-      - key: DATABASE_URL
-        fromDatabase:
-          name: smile-organization-db
-          property: connectionString
-    healthCheckPath: /
-
-    # Where Render should look for static assets after collectstatic
-    staticPublishPath: "staticfiles"
-
-databases:
-  - name: smile-organization-db
-    databaseName: smile_organization
-    user: smile_user
