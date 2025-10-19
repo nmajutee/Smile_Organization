@@ -5,11 +5,7 @@ services:
     # Use a maintained Python runtime version. Update if Render adds newer supported versions.
     python_version: 3.11
     # Build: install deps, run migrations and collectstatic. Keep this idempotent.
-    buildCommand: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-      python manage.py migrate --noinput
-      python manage.py collectstatic --noinput
+    buildCommand: python -m pip install --upgrade pip && pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py collectstatic --noinput
     # Start with gunicorn (use WEB_CONCURRENCY env var or default to 3)
     startCommand: gunicorn smile_backend.wsgi:application --bind 0.0.0.0:$PORT --workers ${WEB_CONCURRENCY:-3} --threads 4 --log-level info
     autoDeploy: true
