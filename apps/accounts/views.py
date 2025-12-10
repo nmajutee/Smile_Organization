@@ -93,3 +93,12 @@ def change_password(request):
 
         return Response({'message': 'Password changed successfully'})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout_view(request):
+    """Logout user and redirect to home"""
+    logout(request)
+    return redirect('home')
