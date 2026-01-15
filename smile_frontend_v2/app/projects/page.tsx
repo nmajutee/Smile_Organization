@@ -312,11 +312,11 @@ export default function ProjectsPage() {
             <Link href="/donate">
               <Button 
                 variant="secondary" 
-                size="xl"
-                icon={<ArrowRight />}
+                size="lg"
                 className="bg-[#C4A962] hover:bg-[#B39952] text-white"
               >
                 Give to General Fund
+                <ArrowRight />
               </Button>
             </Link>
           </div>
