@@ -240,8 +240,9 @@ export default function ProjectsPage() {
 
           {/* Load More */}
           <div className="text-center mt-12">
-            <Button variant="outline" size="lg" icon={<ArrowRight />}>
+            <Button variant="outline" size="lg">
               Load More Projects
+              <ArrowRight />
             </Button>
           </div>
         </div>

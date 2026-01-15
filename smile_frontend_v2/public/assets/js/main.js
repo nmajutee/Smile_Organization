@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // });
 
 
-    // products filtering 
+    // products filtering
     if (document.querySelector(".ul-filter-products-wrapper")) {
         mixitup('.ul-filter-products-wrapper');
     }
@@ -360,7 +360,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     // -------------------------------
     // REALTICS JS
-    // -------------------------------    
+    // -------------------------------
 
     // testimonial slider
     new Swiper(".ul-inner-testimonial-slider", {
@@ -833,7 +833,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
     }
 
-    // blogs slider 
+    // blogs slider
     new Swiper(".ul-blogs-slider", {
         slidesPerView: 2.11,
         slidesPerView: 2.6,
@@ -972,6 +972,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 
 
-    // footer copyright text year 
+    // footer copyright text year
     document.getElementById("footer-copyright-year").textContent = new Date().getFullYear();
 });

@@ -178,7 +178,7 @@ if DEBUG:
 else:
     CORS_ALLOW_ALL_ORIGINS = False
     CORS_ALLOWED_ORIGINS = [
-        FRONTEND_URL, 
+        FRONTEND_URL,
         'https://smile-frontend.pages.dev', # Explicitly allow Cloudflare Deployment
         'http://localhost:3000' # Always allow local dev for testing
     ]
