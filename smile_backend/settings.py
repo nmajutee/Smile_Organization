@@ -22,8 +22,10 @@ if isinstance(DEBUG, str):
 raw_allowed = config('ALLOWED_HOSTS', '')
 if raw_allowed:
     ALLOWED_HOSTS = [h.strip() for h in raw_allowed.split(',') if h.strip()]
+    # auto-allow vercel deployments
+    ALLOWED_HOSTS += ['.vercel.app']
 else:
-    ALLOWED_HOSTS = ['*'] if DEBUG else []
+    ALLOWED_HOSTS = ['*'] if DEBUG else ['.vercel.app']
 
 
 INSTALLED_APPS = [
@@ -82,21 +84,15 @@ WSGI_APPLICATION = 'smile_backend.wsgi.application'
 # DATABASE: use DATABASE_URL in production (Postgres) and fall back to sqlite for local dev
 DATABASES = {}
 _DATABASE_URL = config('DATABASE_URL', '')
-if _DATABASE_URL:
-    try:
-        import dj_database_url
 
-        DATABASES['default'] = dj_database_url.parse(
-            _DATABASE_URL,
-            conn_max_age=int(config('DB_CONN_MAX_AGE', 600)),
-        )
-    except Exception:
-        # if dj-database-url is not installed or parsing fails, fall back to sqlite
-        DATABASES['default'] = {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+if _DATABASE_URL:
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config(
+        default=_DATABASE_URL,
+        conn_max_age=0  # IMPORTANT: Set to 0 for Serverless (Vercel) to close connections immediately after request
+    )
 else:
+    # Local SQLite fallback
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -181,7 +177,16 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOW_ALL_ORIGINS = False
-    CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
+    CORS_ALLOWED_ORIGINS = [
+        FRONTEND_URL, 
+        'https://smile-frontend.pages.dev', # Explicitly allow Cloudflare Deployment
+        'http://localhost:3000' # Always allow local dev for testing
+    ]
+    # Allow wildcard subdomains for preview deployments if needed
+    CORS_ALLOW_REGEX_ORIGINS = [
+        r"^https://.*\.pages\.dev$",
+        r"^https://.*\.vercel\.app$",
+    ]
 
 # Production security settings
 if not DEBUG:

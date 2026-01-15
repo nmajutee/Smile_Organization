@@ -24,8 +24,8 @@ class Project(models.Model):
 
     # targets
     volunteer_needed = models.IntegerField(default=0)
-    donation_goal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    donation_raised = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    donation_goal = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    donation_raised = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     # media
     image = models.ImageField(upload_to='projects/', blank=True, null=True)

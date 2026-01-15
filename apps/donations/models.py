@@ -30,8 +30,8 @@ class Donation(models.Model):
     # donation details
     project = models.ForeignKey(Project, on_delete=models.CASCADE,
                                 related_name='donations', null=True, blank=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    currency = models.CharField(max_length=3, default='USD')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    currency = models.CharField(max_length=3, default='XAF')
 
     # payment info
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD_CHOICES)
@@ -52,4 +52,4 @@ class Donation(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.donor_email} - ${self.amount} - {self.status}"
+        return f"{self.donor_email} - {self.amount} XAF - {self.status}"

@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         port: '8000',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: '*.onrender.com',
+        port: '',
+        pathname: '/media/**',
+      },
     ],
     // Use unoptimized images for development to avoid localhost issues
     unoptimized: process.env.NODE_ENV === 'development',
