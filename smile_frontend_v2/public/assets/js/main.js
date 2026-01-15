@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     // preloader
     const preloader = document.getElementById('preloader');
-    preloader.style.display = 'none';
+    if (preloader) {
+        preloader.style.display = 'none';
+    }
     document.body.style.position = 'static';
 
     // HEADER NAV IN MOBILE

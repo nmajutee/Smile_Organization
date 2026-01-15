@@ -1,174 +1,357 @@
 'use client';
 
-import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { useState, useEffect } from 'react';
+import { useCounter } from '@/lib/hooks';
+
+// Video Modal Component
+function VideoModal() {
+  const [videoSrc, setVideoSrc] = useState('');
+
+  useEffect(() => {
+    const modal = document.getElementById('videoModal');
+    if (modal) {
+      modal.addEventListener('show.bs.modal', function (event) {
+        const button = (event as unknown as { relatedTarget: HTMLElement }).relatedTarget;
+        const src = button?.getAttribute('data-src');
+        if (src) setVideoSrc(src);
+      });
+      modal.addEventListener('hide.bs.modal', function () {
+        setVideoSrc('');
+      });
+    }
+  }, []);
+
+  return (
+    <div className="modal fade" id="videoModal" tabIndex={-1} aria-labelledby="videoModalLabel" aria-hidden="true">
+      <div className="modal-dialog">
+        <div className="modal-content rounded-0">
+          <div className="modal-header">
+            <h5 className="modal-title" id="videoModalLabel">Video</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div className="modal-body">
+            <div className="ratio ratio-16x9">
+              {videoSrc && (
+                <iframe
+                  className="embed-responsive-item"
+                  src={`${videoSrc}?autoplay=1`}
+                  id="video"
+                  allowFullScreen
+                  allow="autoplay"
+                ></iframe>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Team member data
+const teamMembersData = [
+  {
+    id: 1,
+    name: 'Numfor Boris',
+    role: 'Founder & CEO',
+    image: '/gallery/InShot_20230911_205611720.jpg',
+    socials: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      youtube: '#'
+    }
+  },
+  {
+    id: 2,
+    name: 'Donald Pakura',
+    role: 'Project Manager',
+    image: '/gallery/InShot_20230911_210951284.jpg',
+    socials: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      youtube: '#'
+    }
+  },
+  {
+    id: 3,
+    name: 'Alexander Bell',
+    role: 'Volunteer',
+    image: '/gallery/InShot_20230911_211148189.jpg',
+    socials: {
+      facebook: '#',
+      twitter: '#',
+      instagram: '#',
+      youtube: '#'
+    }
+  }
+];
 
 export default function AboutPage() {
-    return (
-        <main className="min-h-screen pt-20">
-            {/* FOUNDER STORY HERO */}
-            <section className="py-20 bg-white">
-                <div className="container-custom">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="relative">
-                            <div className="relative z-10 rounded-2xl overflow-hidden shadow-xl">
-                                <img
-                                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80"
-                                    alt="Numfor Boris with children"
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
-                            {/* Decorative element */}
-                            <div className="absolute -bottom-6 -right-6 w-full h-full bg-orange-50 rounded-2xl -z-0 hidden md:block" />
-                        </div>
+  const [email, setEmail] = useState('');
 
-                        <div>
-                            <Badge variant="default" className="mb-4">Our Founder's Story</Badge>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-                                "I couldn't stand by and watch a generation be lost."
-                            </h1>
-                            <div className="space-y-6 text-lg text-gray-600">
-                                <p>
-                                    <strong>Numfor Boris</strong> founded Smile Organization in 2016, right as the Anglophone Crisis began to tear through communities in Cameroon.
-                                </p>
-                                <p>
-                                    Witnessing children displaced from their homes, schools burning down, and families separated, Boris realized that while he couldn't stop the conflict, he could help the victims.
-                                </p>
-                                <p>
-                                    "Every child has a story," Boris says. "And if we can get those stories to the world, we can find the help they need to survive and dream again."
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+  // Stats counters - using tuple pattern [count, setRef]
+  const [teamMembersCountValue, teamMembersCountRef] = useCounter(500, 2500);
+  const [awardsValue, awardsRef] = useCounter(70, 2000);
+  const [projectsValue, projectsRef] = useCounter(3000, 2500);
+  const [reviewsValue, reviewsRef] = useCounter(7000, 2500);
 
-            {/* MISSION & VISION */}
-            <section className="py-20 bg-gray-50">
-                <div className="container-custom">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <Card className="bg-white border-none shadow-md p-8">
-                            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-6 text-[#FF6B35]">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
-                            <p className="text-gray-600 leading-relaxed">
-                                To provide an accessible platform where children in need can share their stories, connect with compassionate supporters worldwide, and receive meaningful help that restores their dignity and future.
-                            </p>
-                        </Card>
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle newsletter subscription
+    console.log('Newsletter subscription:', email);
+    setEmail('');
+  };
 
-                        <Card className="bg-white border-none shadow-md p-8">
-                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-600">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </div>
-                            <h2 className="text-2xl font-bold mb-4">Our Vision</h2>
-                            <p className="text-gray-600 leading-relaxed">
-                                A compassionate digital ecosystem where every child, regardless of their circumstances, has the opportunity to be heard, supported, and empowered to reach their full potential.
-                            </p>
-                        </Card>
-                    </div>
-                </div>
-            </section>
+  return (
+    <>
+      {/* Page Header Start */}
+      <div className="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container text-center py-4">
+          <h1 className="display-3 animated slideInDown text-white">About Us</h1>
+          <nav aria-label="breadcrumb animated slideInDown">
+            <ol className="breadcrumb justify-content-center mb-0">
+              <li className="breadcrumb-item">
+                <Link href="/" className="text-white">Home</Link>
+              </li>
+              <li className="breadcrumb-item">
+                <span className="text-white">Pages</span>
+              </li>
+              <li className="breadcrumb-item active text-white" aria-current="page">About Us</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      {/* Page Header End */}
 
-            {/* GUIDING PRINCIPLES */}
-            <section className="py-20 bg-white">
-                <div className="container-custom">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Guiding Principles</h2>
-                        <p className="text-gray-600">
-                            Everything we do is built on these core values to ensure we serve our children and donors with integrity.
-                        </p>
-                    </div>
+      {/* Video Section Start */}
+      <div className="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container">
+          <div className="row g-0">
+            <div className="col-lg-11">
+              <div className="h-100 py-5 d-flex align-items-center">
+                <button
+                  type="button"
+                  className="btn-play"
+                  data-bs-toggle="modal"
+                  data-src="https://www.youtube.com/embed/DWRcNpR6Kdc"
+                  data-bs-target="#videoModal"
+                >
+                  <span></span>
+                </button>
+                <h3 className="ms-5 mb-0">Together, we can build a world where everyone has the chance to thrive.</h3>
+              </div>
+            </div>
+            <div className="d-none d-lg-block col-lg-1">
+              <div className="h-100 w-100 bg-secondary d-flex align-items-center justify-content-center">
+                <span className="text-white" style={{ transform: 'rotate(-90deg)' }}>Scroll Down</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Video Section End */}
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6 text-gray-900">
-                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Human-Centered Storytelling</h3>
-                            <p className="text-gray-600">
-                                We put people first. We let authentic stories drive connection, ensuring every child's voice is heard with dignity.
-                            </p>
-                        </div>
+      {/* Video Modal */}
+      <VideoModal />
 
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6 text-gray-900">
-                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Trust by Design</h3>
-                            <p className="text-gray-600">
-                                Through rigorous verification, complete transparency, and clear impact tracking, we build trust in every interaction.
-                            </p>
-                        </div>
-
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6 text-gray-900">
-                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Radical Simplicity</h3>
-                            <p className="text-gray-600">
-                                We remove barriers between hearts and help. Our platform is simple and accessible so anyone can make a difference.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* IMPACT STATS */}
-            <section className="py-20 bg-gray-900 text-white">
-                <div className="container-custom">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                        <div>
-                            <span className="block text-4xl md:text-5xl font-bold text-[#FF6B35] mb-2">2016</span>
-                            <span className="text-gray-400">Year Founded</span>
-                        </div>
-                        <div>
-                            <span className="block text-4xl md:text-5xl font-bold text-[#FF6B35] mb-2">500+</span>
-                            <span className="text-gray-400">Children Helped</span>
-                        </div>
-                        <div>
-                            <span className="block text-4xl md:text-5xl font-bold text-[#FF6B35] mb-2">50+</span>
-                            <span className="text-gray-400">Communities</span>
-                        </div>
-                        <div>
-                            <span className="block text-4xl md:text-5xl font-bold text-[#FF6B35] mb-2">100%</span>
-                            <span className="text-gray-400">Commitment</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA */}
-            <section className="py-20 bg-orange-50 text-center">
-                <div className="container-custom max-w-2xl">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-900">Join Our Mission</h2>
-                    <p className="text-lg text-gray-600 mb-8">
-                        Whether you donate, volunteer, or simply share a story, you are part of the solution.
+      {/* About Section Start */}
+      <div className="container-fluid py-5">
+        <div className="container">
+          <div className="row g-5 align-items-center">
+            <div className="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
+              <div className="about-img">
+                <Image
+                  className="img-fluid w-100"
+                  src="/gallery/about-smile-alwayz-organization.jpg"
+                  alt="About Smile Organization"
+                  width={600}
+                  height={500}
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <p className="section-title bg-white text-start text-primary pe-3">About Us</p>
+              <h1 className="display-6 mb-4 wow fadeIn" data-wow-delay="0.2s">Join Hands, Change the World</h1>
+              <p className="mb-4 wow fadeIn" data-wow-delay="0.3s">
+                Every hand extended in kindness brings us closer to a world free from suffering.
+                Be part of a global movement dedicated to building a future where equality and compassion thrive.
+              </p>
+              <div className="row g-4 pt-2">
+                <div className="col-sm-6 wow fadeIn" data-wow-delay="0.4s">
+                  <div className="h-100">
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to uplift underprivileged communities by providing resources, education, and tools for growth.</p>
+                    <p className="text-dark">
+                      <i className="fa fa-check text-primary me-2"></i>No one should go to bed hungry.
                     </p>
-                    <div className="flex justify-center gap-4">
-                        <Link href="/projects">
-                            <Button size="lg">Support a Child</Button>
-                        </Link>
-                        <Link href="/contact">
-                            <Button variant="outline" size="lg" className="bg-white">Contact Us</Button>
-                        </Link>
-                    </div>
+                    <p className="text-dark">
+                      <i className="fa fa-check text-primary me-2"></i>We spread kindness and support.
+                    </p>
+                    <p className="text-dark mb-0">
+                      <i className="fa fa-check text-primary me-2"></i>We can change someone&apos;s life.
+                    </p>
+                  </div>
                 </div>
-            </section>
-        </main>
-    );
+                <div className="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                  <div className="h-100 bg-primary p-4 text-center">
+                    <p className="fs-5 text-dark">
+                      Through your donations, we spread kindness and support to children and families.
+                    </p>
+                    <Link className="btn btn-secondary py-2 px-4" href="/donation">Donate Now</Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* About Section End */}
+
+      {/* Features/Stats Section Start */}
+      <div className="container-fluid py-5">
+        <div className="container">
+          <div className="row g-5 align-items-center">
+            <div className="col-lg-6">
+              <div className="rounded overflow-hidden">
+                <div className="row g-0">
+                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div ref={teamMembersCountRef} className="text-center bg-primary py-5 px-4 h-100">
+                      <i className="fa fa-users fa-3x text-secondary mb-3"></i>
+                      <h1 className="display-5 mb-0">{teamMembersCountValue}</h1>
+                      <span className="text-dark">Team Members</span>
+                    </div>
+                  </div>
+                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div ref={awardsRef} className="text-center bg-secondary py-5 px-4 h-100">
+                      <i className="fa fa-award fa-3x text-primary mb-3"></i>
+                      <h1 className="display-5 text-white mb-0">{awardsValue}</h1>
+                      <span className="text-white">Award Winning</span>
+                    </div>
+                  </div>
+                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div ref={projectsRef} className="text-center bg-secondary py-5 px-4 h-100">
+                      <i className="fa fa-list-check fa-3x text-primary mb-3"></i>
+                      <h1 className="display-5 text-white mb-0">{projectsValue}</h1>
+                      <span className="text-white">Total Projects</span>
+                    </div>
+                  </div>
+                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
+                    <div ref={reviewsRef} className="text-center bg-primary py-5 px-4 h-100">
+                      <i className="fa fa-comments fa-3x text-secondary mb-3"></i>
+                      <h1 className="display-5 mb-0">{reviewsValue}</h1>
+                      <span className="text-dark">Client&apos;s Review</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <p className="section-title bg-white text-start text-primary pe-3">Why Us!</p>
+              <h1 className="display-6 mb-4 wow fadeIn" data-wow-delay="0.2s">Few Reasons Why People Choosing Us!</h1>
+              <p className="mb-4 wow fadeIn" data-wow-delay="0.3s">
+                We believe in creating opportunities and empowering communities through education, healthcare, and sustainable development.
+                Your support helps us bring smiles, hope, and a brighter future to those in need.
+              </p>
+              <p className="text-dark wow fadeIn" data-wow-delay="0.4s">
+                <i className="fa fa-check text-primary me-2"></i>Transparent and accountable operations
+              </p>
+              <p className="text-dark wow fadeIn" data-wow-delay="0.5s">
+                <i className="fa fa-check text-primary me-2"></i>Direct impact on communities we serve
+              </p>
+              <p className="text-dark wow fadeIn" data-wow-delay="0.6s">
+                <i className="fa fa-check text-primary me-2"></i>Sustainable long-term development programs
+              </p>
+              <div className="d-flex mt-4 wow fadeIn" data-wow-delay="0.7s">
+                <Link className="btn btn-primary py-3 px-4 me-3" href="/donation">Donate Now</Link>
+                <Link className="btn btn-secondary py-3 px-4" href="/contact">Join Us Now</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Features/Stats Section End */}
+
+      {/* Team Section Start */}
+      <div className="container-fluid py-5">
+        <div className="container">
+          <div className="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style={{ maxWidth: '500px' }}>
+            <p className="section-title bg-white text-center text-primary px-3">Our Team</p>
+            <h1 className="display-6 mb-4">Meet Our Dedicated Team Members</h1>
+          </div>
+          <div className="row g-4">
+            {teamMembersData.map((member, index) => (
+              <div key={member.id} className="col-md-6 col-lg-4 wow fadeIn" data-wow-delay={`${0.1 + index * 0.2}s`}>
+                <div className="team-item d-flex h-100 p-4">
+                  <div className="team-detail pe-4">
+                    <Image
+                      className="img-fluid mb-4"
+                      src={member.image}
+                      alt={member.name}
+                      width={200}
+                      height={200}
+                      style={{ objectFit: 'cover' }}
+                    />
+                    <h3>{member.name}</h3>
+                    <span>{member.role}</span>
+                  </div>
+                  <div className="team-social bg-light d-flex flex-column justify-content-center flex-shrink-0 p-4">
+                    <Link className="btn btn-square btn-primary my-2" href={member.socials.facebook}>
+                      <i className="fab fa-facebook-f"></i>
+                    </Link>
+                    <Link className="btn btn-square btn-primary my-2" href={member.socials.twitter}>
+                      <i className="fab fa-x-twitter"></i>
+                    </Link>
+                    <Link className="btn btn-square btn-primary my-2" href={member.socials.instagram}>
+                      <i className="fab fa-instagram"></i>
+                    </Link>
+                    <Link className="btn btn-square btn-primary my-2" href={member.socials.youtube}>
+                      <i className="fab fa-youtube"></i>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* Team Section End */}
+
+      {/* Newsletter Section Start */}
+      <div className="container-fluid bg-primary py-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-7 text-center wow fadeIn" data-wow-delay="0.5s">
+              <h1 className="display-6 mb-4">Subscribe to Our Newsletter</h1>
+              <form onSubmit={handleNewsletterSubmit}>
+                <div className="position-relative w-100 mb-2">
+                  <input
+                    className="form-control border-0 w-100 ps-4 pe-5"
+                    type="email"
+                    placeholder="Enter Your Email"
+                    style={{ height: '60px' }}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-lg-square shadow-none position-absolute top-0 end-0 mt-2 me-2"
+                  >
+                    <i className="fa fa-paper-plane text-primary fs-4"></i>
+                  </button>
+                </div>
+              </form>
+              <p className="mb-0">Don&apos;t worry, we won&apos;t spam you with emails.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Newsletter Section End */}
+    </>
+  );
 }
